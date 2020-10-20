@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RandomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +12,6 @@ use App\Http\Controllers\RandomController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/get-data', [RandomController::class, 'getData']);
-Route::post('/edit-flag', [RandomController::class, 'editFlag']);
 
 Route::get('/', function () {
     return view('welcome');

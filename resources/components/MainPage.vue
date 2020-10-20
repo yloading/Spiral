@@ -78,13 +78,13 @@ export default {
             this.groupBy(this.randomData, 'random_id')
             const keys = Object.keys(this.randomId)
 
-            const res = await this.callApi('post', '/edit-flag', keys)  
+            const res = await this.callApi('patch', '/api/randoms', keys)  
         }
     },
     
     async created() {
         
-        const res = await this.callApi('get', '/get-data')
+        const res = await this.callApi('get', '/api/breakdowns')
 
         if(res.status == 200) {
             this.randomData = res.data

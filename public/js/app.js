@@ -2020,7 +2020,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 keys = Object.keys(_this2.randomId);
                 _context.next = 4;
-                return _this2.callApi('post', '/edit-flag', keys);
+                return _this2.callApi('patch', '/api/randoms', keys);
 
               case 4:
                 res = _context.sent;
@@ -2044,7 +2044,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return _this3.callApi('get', '/get-data');
+              return _this3.callApi('get', '/api/breakdowns');
 
             case 2:
               res = _context2.sent;
