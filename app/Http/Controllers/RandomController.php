@@ -12,8 +12,7 @@ class RandomController extends Controller
         if (Random::get()->where('flag', false)->first() == null) {
             $this->generateRandomAndBreakdownData();
         }
-        return Random::where('flag', false)
-    ->join('breakdowns', 'breakdowns.random_id', '=', 'randoms.id')->get();
+        return Random::join('breakdowns', 'breakdowns.random_id', '=', 'randoms.id')->where('flag', false)->get();
 
     }
 
@@ -48,5 +47,14 @@ class RandomController extends Controller
         }
 
         return $randomString;
+    }
+
+    public function editFlag(Request $request) {
+        $arr = $request->all();
+        for ($i=0; $i < count($arr); $i++) { 
+            Random::where('id', $arr[$i])->update([
+                'flag' => true
+            ]);
+        }
     }
 }

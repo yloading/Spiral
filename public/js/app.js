@@ -1932,38 +1932,138 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      randomData: []
+      randomData: [],
+      randomId: []
     };
   },
-  created: function created() {
-    var _this = this;
+  methods: {
+    groupBy: function groupBy(objectArray, property) {
+      var _this = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return objectArray.reduce(function (arr, obj) {
+        var value = obj[property];
+
+        if (!arr[value]) {
+          arr[value] = [];
+        }
+
+        arr[value].push(obj);
+        return _this.randomId = arr;
+      }, {});
+    },
+    setFlag: function setFlag(steps) {
+      var c = document.getElementById("myCanvas");
+      var cxt = c.getContext("2d");
+      var centerX = 250;
+      var centerY = 250;
+      cxt.moveTo(centerX, centerY);
+      var characters = this.getValues(); // character map for spiral
+
+      var gap = 2.5; // increase this for spacing between spiral lines        
+
+      var rotation = 0; // value between 0..1 that rotates the characters 0..360 degrees.
+
+      var spread = 1; // increasing this makes the spread more
+
+      var spirals = 15; // number of spirals
+
+      var STEPS_PER_ROTATION = steps; // increasing this adds more characters
+
+      var increment = spread * 2 * Math.PI / STEPS_PER_ROTATION;
+      var theta = increment;
+      var maxFont = 12;
+      cxt.font = '0px sans';
+      cxt.textBaseline = 'center';
+      var spiralCount = 2 * spirals * Math.PI;
+      var _char = 0;
+
+      while (theta < spiralCount) {
+        var newX = centerX + theta * Math.cos(theta) * gap;
+        var newY = centerY + theta * Math.sin(theta) * gap;
+        var rot = Math.atan2(newY - centerY, newX - centerX);
+        cxt.save();
+        cxt.translate(newX, newY);
+        cxt.rotate(rot + rotation * 2 * Math.PI);
+        cxt.font = maxFont * (theta / spiralCount) + 'px sans';
+        cxt.fillText(characters[_char], 0, 0);
+        cxt.restore();
+        theta = theta + increment;
+        _char++;
+        if (_char > characters.length - 1) _char = 0;
+      }
+
+      cxt.stroke();
+    },
+    getValues: function getValues() {
+      var temp = [];
+
+      for (var index = 0; index < this.randomData.length; index++) {
+        temp.push(this.randomData[index].values);
+      }
+
+      return temp.join(' ');
+    },
+    updateFlag: function updateFlag() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var keys, res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this2.groupBy(_this2.randomData, 'random_id');
+
+                keys = Object.keys(_this2.randomId);
+                _context.next = 4;
+                return _this2.callApi('post', '/edit-flag', keys);
+
+              case 4:
+                res = _context.sent;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  },
+  created: function created() {
+    var _this3 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var res;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context.next = 2;
-              return _this.callApi('get', '/get-data');
+              _context2.next = 2;
+              return _this3.callApi('get', '/get-data');
 
             case 2:
-              res = _context.sent;
+              res = _context2.sent;
 
-              if (res.response == 200) {
-                _this.randomData = res.data; // spiral
-                // update flag
+              if (res.status == 200) {
+                _this3.randomData = res.data; // spiral
+
+                _this3.setFlag(80); // update flag to true (displayed)
+
+
+                _this3.updateFlag();
               }
 
             case 4:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee);
+      }, _callee2);
     }))();
   }
 });
@@ -20377,7 +20477,10 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("hi vue")])
+  return _c("canvas", {
+    staticStyle: { border: "1px solid #c3c3c3" },
+    attrs: { id: "myCanvas", width: "500", height: "500" }
+  })
 }
 var staticRenderFns = []
 render._withStripped = true

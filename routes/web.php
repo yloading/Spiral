@@ -14,6 +14,7 @@ use App\Http\Controllers\RandomController;
 |
 */
 Route::get('/get-data', [RandomController::class, 'getData']);
+Route::post('/edit-flag', [RandomController::class, 'editFlag']);
 
 Route::get('/', function () {
     return view('welcome');
