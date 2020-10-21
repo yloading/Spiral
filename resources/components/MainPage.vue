@@ -47,7 +47,7 @@ export default {
             var theta = increment;
             var maxFont = 12;
             
-            cxt.font = '0px sans';
+            cxt.font = '0px arial';
             cxt.textBaseline = 'center';
 
             let spiralCount = 2*spirals*Math.PI;
@@ -61,7 +61,7 @@ export default {
                 cxt.save();
                 cxt.translate(newX, newY);
                 cxt.rotate(rot + (rotation * 2 * Math.PI));
-                cxt.font = (maxFont * (theta / spiralCount)) + 'px sans';
+                cxt.font = (maxFont * (theta / spiralCount)) + 'px arial';
                 cxt.fillText(characters[char], 0, 0);
                 cxt.restore();
                 theta = theta + increment;

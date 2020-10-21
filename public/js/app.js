@@ -1970,7 +1970,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var increment = spread * 2 * Math.PI / stepsPerRotation;
       var theta = increment;
       var maxFont = 12;
-      cxt.font = '0px sans';
+      cxt.font = '0px arial';
       cxt.textBaseline = 'center';
       var spiralCount = 2 * spirals * Math.PI;
       var _char = 0;
@@ -1982,7 +1982,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         cxt.save();
         cxt.translate(newX, newY);
         cxt.rotate(rot + rotation * 2 * Math.PI);
-        cxt.font = maxFont * (theta / spiralCount) + 'px sans';
+        cxt.font = maxFont * (theta / spiralCount) + 'px arial';
         cxt.fillText(characters[_char], 0, 0);
         cxt.restore();
         theta = theta + increment;
