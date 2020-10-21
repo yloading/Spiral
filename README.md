@@ -17,6 +17,6 @@ A basic web application that shows multiple random 5-character string in a spira
 
 Now you're ready to go!
 
-> Note: You can change the number of characters that is being displayed by changing the parameter value of `setFlag(*int*)`.
+> Note: You can change the number of characters that is being displayed by changing the parameter value of **setFlag(_int_)**.
 
 
